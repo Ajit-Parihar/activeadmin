@@ -2,27 +2,21 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    user ||= User.new 
+    @user = user || User.new # Ensure @user is never nil
 
-    if user.superadmin?
-      can :manage, :all 
 
-    elsif user.admin?
+   if @user.admin?
+      can :manage, Order
+      # can :manage, Product
+      # can :manage, Business
+      # cannot :read, ActiveAdmin::Page, name: "Dashboard" # Admin cannot access dashboard
 
-      can :manage, ActiveAdmin::Page, name: "Order"
-      can :manage, ActiveAdmin::Page, name: "Product"
-      can :manage, ActiveAdmin::Page, name: "Business"
-      
-
-      cannot :read, ActiveAdmin::Page, name: "Dashboard"
-
-    elsif user.seller? || user.user?
-      
+    elsif @user.seller? || @user.user?
       can :read, :home
-      can :manage, :Order
+      can :manage, Order # Sellers & users can manage their own orders
 
     else
-      can :read, :home
+      can :read, :home # Guests can only view the homepage
     end
   end
 end

@@ -8,7 +8,10 @@ class User < ApplicationRecord
   has_many :businesses
   has_many :orders
 
-  enum role: { user: 0, seller: 1, admin: 2, superadmin: 3 }
+  has_one :admin_product, foreign_key: :admin_id, dependent: :destroy # One-to-One
+  
+
+  enum role: { user: 0, seller: 1, admin: 2}
 
   def timeout_in
     1.hours

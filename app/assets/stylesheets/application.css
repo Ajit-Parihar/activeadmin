@@ -21,6 +21,8 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
+  
+
   }
   
   .dashboard-container .panel h3 {
@@ -31,10 +33,13 @@
   }
   
   /* Styling the Paragraph Text */
-  .dashboard-container .panel para {
+  .dashboard-container .panel p {
     font-size: 1.1em;
     color: #555;
-    margin: 10px 0;
+    margin: 20px 0; /* Increase margin for spacing */
+    padding-top: 10px; /* Moves text a bit downward */
+    padding-top: 20px;
+  
   }
   
   .dashboard-container .panel .percentage {

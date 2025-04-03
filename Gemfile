@@ -60,5 +60,6 @@ gem "activeadmin"
 gem "devise"
 gem "sassc-rails"
 
+gem 'ransack'
 
 gem 'cancancan'

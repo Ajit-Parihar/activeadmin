@@ -12,6 +12,7 @@ ActiveAdmin.register_page "Dashboard" do
     end
 
     total_users = User.count
+    total_users-=1
     total_admins = User.where(role: 'admin').count
     total_sellers = User.where(role: 'seller').count
     total_regular_users = User.where(role: 'user').count
@@ -20,7 +21,7 @@ ActiveAdmin.register_page "Dashboard" do
     ratio_seller = total_sellers.to_f / total_users
     ratio_user = total_regular_users.to_f / total_users
 
-    div class: 'dashboard-container' do
+    div class: 'dashboard-container ' do
       panel "User Role Ratios" do
         para "Total Users: #{total_users}", class: 'total'
         para "Admins: #{total_admins} (#{(ratio_admin * 100).round(2)}%)"
@@ -45,6 +46,8 @@ ActiveAdmin.register_page "Dashboard" do
         span I18n.t("active_admin.dashboard_welcome.welcome")
         small I18n.t("active_admin.dashboard_welcome.call_to_action")
       end
+     end
     end
-  end
-end
+   end
+
+

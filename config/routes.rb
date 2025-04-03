@@ -15,11 +15,8 @@ Rails.application.routes.draw do
 
   ActiveAdmin.routes(self)
 
-  # namespace :admin do
-  #   resources :products do
-  #     collection do
-  #       get :show_category_product
-  #     end
-  #   end
+  # namespace :admin, path: "admin_orders" do
+  #   resources :orders, path: "admin_orders" # Changes /admin/orders → /dashboard_admin/custom_orders
   # end
+  
 end

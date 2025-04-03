@@ -1,4 +1,7 @@
 ActiveAdmin.register Product do
+
+
+
   remove_filter :image_attachment, :image_blob
 
   permit_params :name, :price, :brand_name, :image, :business_id
@@ -12,6 +15,16 @@ ActiveAdmin.register Product do
       f.input :business_id, as: :radio, collection: Business.pluck(:category, :id), label: "Product Category"
         end
     f.actions
+  end
+
+  controller do
+    def scoped_collection
+      if current_user.admin?
+        Product.all    
+      else
+        product_ids = AdminProduct.where(admin_id: current_user.id).pluck(:product_id)
+        Product.where(id: product_ids)      end
+    end
   end
 
   index do 
@@ -28,28 +41,22 @@ ActiveAdmin.register Product do
         end
       end
    end
-    #  def show_category_product
-    #      render plain: "okey"
-    #  end
-
-show do 
+   
+  show do 
      attributes_table do 
       row :image do |product|
-              if product.image.attached?
+             if product.image.attached?
                 image_tag product.image, alt: product.name, style: 'max-width: 300px;' 
                  else
                 "No image available"
               end
             end
        row :price
-       row :name     
+       row :name
        row :brand_name
-         end
+      end
       orders = Order.where(product_id: product.id) 
       sellers = SellerProduct.where(product_id: product.id)
-
-   puts orders.inspect
-    
             panel "buyers" do
                table_for orders do
                   column "User" do |order|
